@@ -1,3 +1,9 @@
+### OAuth ###
+application-oauth.properties
+
+
+
+
 HELP.md
 .gradle
 build/
@@ -35,3 +41,5 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
