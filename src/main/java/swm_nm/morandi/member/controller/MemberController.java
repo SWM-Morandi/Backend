@@ -5,9 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import swm_nm.morandi.auth.security.SecurityUtils;
 import swm_nm.morandi.member.dto.GraphDto;
 import swm_nm.morandi.member.dto.GrassDto;
 import swm_nm.morandi.member.dto.MemberDto;
+import swm_nm.morandi.member.dto.RegisterInfoDto;
 import swm_nm.morandi.member.service.AttemptProblemService;
 import swm_nm.morandi.member.service.MemberService;
 import swm_nm.morandi.test.dto.TestRatingDto;
@@ -17,13 +19,21 @@ import swm_nm.morandi.test.service.TestService;
 import java.util.*;
 
 @RestController
-@RequestMapping("/api/members")
+@RequestMapping("/members")
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberService memberService;
     private final AttemptProblemService attemptProblemService;
     private final TestService testService;
+
+    @PostMapping("/register-info")
+    public ResponseEntity<RegisterInfoDto> memberInitialize(@RequestBody RegisterInfoDto registerInfoDto)
+    {
+        return ResponseEntity.ok(memberService.memberInitialize(registerInfoDto));
+
+    }
+
     @GetMapping("/{memberId}")
     public ResponseEntity<Map<String, Object>> memberInfo(@PathVariable Long memberId) {
         List<GrassDto> grassDtos =

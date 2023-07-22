@@ -1,3 +1,6 @@
+/src/main/resources/application-oauth.properties
+
+
 HELP.md
 .gradle
 build/
