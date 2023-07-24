@@ -9,6 +9,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class AttemptProblemDto {
+    private Long testId;
+    private Long problemId;
     private Boolean isSolved;
     private LocalDate testDate;
+    private Integer attemptTime;
 }

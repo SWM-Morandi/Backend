@@ -36,6 +36,32 @@ public class AttemptProblemService {
 
     private final AlgorithmRepository algorithmRepository;
 
+    private final MemberRepository memberRepository;
+
+    private final TestRepository testRepository;
+
+    private final ProblemRepository problemRepository;
+
+    public void saveAttemptedProblemResult(Long testId, List<AttemptProblemDto> attemptProblemDtos) {
+        Long memberId = SecurityUtils.getCurrentUserId();
+        //Long memberId = 1L;
+        Member member = memberRepository.findById(memberId).orElseThrow(()-> new RuntimeException("사용자를 찾을 수 없습니다."));
+        Test test = testRepository.findById(testId).orElseThrow(()-> new RuntimeException("테스트를 찾을 수 없습니다."));
+
+        List<AttemptProblem> attemptProblems = attemptProblemDtos.stream().map(attemptProblemDto -> {
+            Problem problem = problemRepository.findById(attemptProblemDto.getProblemId()).orElseThrow(()-> new RuntimeException("문제를 찾을 수 없습니다."));
+            return AttemptProblem.builder()
+                    .isSolved(attemptProblemDto.getIsSolved())
+                    .testDate(attemptProblemDto.getTestDate())
+                    .member(member)
+                    .test(test)
+                    .problem(problem)
+                    .build();
+
+        }).collect(Collectors.toList());
+        attemptProblemRepository.saveAll(attemptProblems);
+
+    }
     public List<GrassDto> getGrassDtosByMemberId(Long memberId) {
         List<AttemptProblem> attemptProblems
                 = attemptProblemRepository.findAllByMember_MemberId(memberId);
