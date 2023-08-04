@@ -70,6 +70,14 @@ public class AttemptProblemService {
                 grassDtos.add(grassDto);
             });
         }
+        if (grassDtos.size() == 0) {
+            GrassDto grassDto = GrassDto.builder()
+                    .testDate(null)
+                    .solvedCount(null)
+                    .build();
+
+            grassDtos.add(grassDto);
+        }
         return grassDtos;
     }
 
@@ -78,7 +86,6 @@ public class AttemptProblemService {
         Map<String, Integer> totalCount = new HashMap<>();
         Map<String, Integer> Count = new HashMap<>();
         List<Algorithm> algorithms = algorithmRepository.findAll();
-
         algorithms.stream().map(Algorithm::getAlgorithmName).forEach(algorithmName -> {
             totalCount.put(algorithmName, 0);
             Count.put(algorithmName, 0);
@@ -103,7 +110,7 @@ public class AttemptProblemService {
             });
 
             algorithms.stream().map(Algorithm::getAlgorithmName).forEach(algorithmName -> {
-                Double solvedRate = (double) Count.get(algorithmName) / (double) totalCount.get(algorithmName) * 100;
+                Double solvedRate = totalCount.get(algorithmName) != 0 ? (double) Count.get(algorithmName) / (double) (totalCount.get(algorithmName)) * 100 : 0;
                 GraphDto graphDto = GraphDto.builder()
                         .algorithmName(algorithmName)
                         .solvedRate(solvedRate)

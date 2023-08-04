@@ -13,7 +13,7 @@ public class OAuthConstants {
             + "include_granted_scopes=true&"
             + "response_type=code&"
             + "state=state_parameter_passthrough_value&"
-            +"redirect_uri=http://api.morandi.co.kr:8080/oauths/google/callback&"
+            +"redirect_uri=http://localhost:8080/oauths/google/callback&"
             +"client_id=1047762864117-c4i1inqqugoesvruk7gkjv0itdnm9mov.apps.googleusercontent.com";
 
     public static final String GOOGLE_REDIRECT_URL_DEV = "https://accounts.google.com/o/oauth2/v2/auth?"
@@ -22,7 +22,7 @@ public class OAuthConstants {
             + "include_granted_scopes=true&"
             + "response_type=code&"
             + "state=state_parameter_passthrough_value&"
-            +"redirect_uri=http://api.morandi.co.kr:8080/oauths/google/callback/dev&"
+            +"redirect_uri=http://localhost:8080/oauths/google/callback/dev&"
             +"client_id=1047762864117-c4i1inqqugoesvruk7gkjv0itdnm9mov.apps.googleusercontent.com";
     public static final String GOOGLE_BASE_URL = "https://accounts.google.com/o/oauth2/v2/auth?";
     public static final String GOOGLE_SCOPE = "scope=https://www.googleapis.com/auth/userinfo.email&";
@@ -32,7 +32,7 @@ public class OAuthConstants {
             "response_type=code&" +
             "state=state_parameter_passthrough_value&";
 
-    public static final String GOOGLE_CLIENT_CALLBACK_REDIRECT = "redirect_uri=http://api.morandi.co.kr:8080/users/google/callback&";
+    public static final String GOOGLE_CLIENT_CALLBACK_REDIRECT = "redirect_uri=http://localhost:8080/users/google/callback&";
 
     public static final String GOOGLE_CLIENT = "client_id=";
 
