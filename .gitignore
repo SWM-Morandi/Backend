@@ -1,4 +1,4 @@
-*.yml
+application.yml
 constants/
 HELP.md
 .gradle
