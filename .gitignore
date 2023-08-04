@@ -1,4 +1,5 @@
-
+*.yml
+constants/
 HELP.md
 .gradle
 build/
@@ -8,7 +9,7 @@ build/
 
 ### STS ###
 .apt_generated
-.classpath
+.classpaths
 .factorypath
 .project
 .settings
