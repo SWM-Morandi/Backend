@@ -24,4 +24,5 @@ public class SecurityUtils {
         // 익명유저시 userId 0 반환
         return 0L;
     }
+
 }

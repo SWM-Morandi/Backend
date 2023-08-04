@@ -38,6 +38,11 @@ dependencies {
     implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '7.4'
 
 
+    //sentry
+
+    implementation group: 'io.sentry', name: 'sentry-logback', version: '6.27.0'
+    implementation 'io.sentry:sentry-spring-boot-starter:6.27.0'
+
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
 

@@ -1,4 +1,7 @@
 spring:
+  profiles:
+    active: SERVICE
+
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://10.0.132.17:3306/morandi
@@ -28,6 +31,7 @@ spring:
     cache:
       disabled: true
 
+
 oauth:
   google:
     client-id: "1047762864117-c4i1inqqugoesvruk7gkjv0itdnm9mov.apps.googleusercontent.com"
@@ -38,3 +42,7 @@ oauth:
     client-id: "202fee18f40f0edd7e64"
     client-secret: "8bd777f3df672d764b51051e658d829e41d23d37"
     redirect-uri: http://api.morandi.co.kr:8080/oauths/github/callback
+
+sentry:
+  dsn: https://2ea46680d1a6e8dd5eb34ed97d3cdf64@o4505639286145024.ingest.sentry.io/4505639321862144
+  traces-sample-rate: 1.0

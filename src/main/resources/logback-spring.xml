@@ -1,20 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration>
-    <timestamp key="BY_DATE" datePattern="yyyy-MM-dd"/>
-    <property name="LOG_PATTERN"
-              value="[%d{yyyy-MM-dd HH:mm:ss}:%-4relative] %green([%thread]) %highlight(%-5level) %boldWhite([%C.%M:%yellow(%L)]) - %msg%n"/>
 
-    <springProfile name="!prod">
-        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-            <encoder>
-                <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger{36} - %msg%n</pattern>
+<!--    <appender name="CONSOLE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <encoder>-->
+<!--            <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%-5level] [%logger{0}:%line] - %msg%n</pattern>-->
+<!--        </encoder>-->
+<!--        <prudent>true</prudent>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
+<!--            <fileNamePattern>${CONSOLE_LOG_PATH}/${HOSTNAME}.console-%d{yyyy-MM-dd}.%i.log</fileNamePattern>-->
+<!--            <maxFileSize>500MB</maxFileSize>-->
+<!--        </rollingPolicy>-->
+<!--    </appender>-->
 
-            </encoder>
-        </appender>
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} - %msg  %logger{36} [%thread] %-5level%n </pattern>
+        </encoder>
+    </appender>
 
+    <appender name="Sentry" class="io.sentry.logback.SentryAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <minimumEventLevel>INFO</minimumEventLevel>
+        <!-- Optionally add an encoder -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} - %msg  %logger{36} [%thread] %-5level%n </pattern>
+        </encoder>
+    </appender>
+
+    <springProfile name="SERVICE">
         <root level="INFO">
-            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="Console"/>
+            <appender-ref ref="Sentry"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="LOCAL">
+        <root level="INFO">
+            <appender-ref ref="Consoler"/>
         </root>
     </springProfile>
 

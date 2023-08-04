@@ -1,6 +1,7 @@
 package swm_nm.morandi.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -15,19 +16,35 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class JwtExceptionFilter extends OncePerRequestFilter {
 
     //필터레벨에서는 생성자로 주입받아야함
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException {
         try {
             filterChain.doFilter(request, response);
         } catch (MorandiException e) {
             //JwtProvider에서 발생하는 예외 처리
+
+            //log
+            String msg = String.format("[clientIP]: %s, [clientURL]: %s,",
+                    request.getRemoteAddr(),
+                    request.getRequestURL().toString()
+            );
+            log.error("{}, [typs]: {}, [parameter]: {}", msg, "CONTROLLER_REQUEST", objectMapper.writeValueAsString(request.getParameterMap()));
+            //log
             setErrorResponse(response, e.getErrorCode());
         }
         catch (Exception e) {
+            //log
+            String msg = String.format("[clientIP]: %s, [clientURL]: %s,",
+                    request.getRemoteAddr(),
+                    request.getRequestURL().toString()
+            );
+            log.error("[REQUEST] [typs]: {}, [parameter]: {}", msg, objectMapper.writeValueAsString(request.getParameterMap()));
+            //log
             setErrorResponse(response, AuthErrorCode.UNKNOWN_ERROR);
         }
 

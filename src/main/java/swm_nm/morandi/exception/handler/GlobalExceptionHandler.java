@@ -1,5 +1,7 @@
 package swm_nm.morandi.exception.handler;
 
+import io.sentry.Scope;
+import io.sentry.Sentry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,7 +24,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> MorandiExceptionHandler(MorandiException e){
 
         String message = e.getMessage();
-        log.error(message, e);
+        //log.error(message, e);
+        Sentry.configureScope(Scope::clear);
         return handleExceptionInternal(e.getErrorCode(),message);
 
 
@@ -33,6 +36,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleIllegalArgument(IllegalArgumentException e) {
         log.error("IllegalArgument handling",e);
         ErrorCode errorCode = CommonErrorCode.INVALID_PARAMETER;
+        Sentry.configureScope(Scope::clear);
         return handleExceptionInternal(errorCode, e.getMessage());
     }
 
@@ -40,6 +44,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleAllException(Exception e) {
         log.error("INTERNAL_SERVER_ERROR", e);
         ErrorCode errorCode = CommonErrorCode.INTERNAL_SERVER_ERROR;
+        Sentry.configureScope(Scope::clear);
         return handleExceptionInternal(errorCode);
     }
 

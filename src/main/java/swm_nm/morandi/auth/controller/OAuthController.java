@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import swm_nm.morandi.auth.constants.SecurityConstants;
-import swm_nm.morandi.auth.response.JwtCookie;
 import swm_nm.morandi.auth.response.TokenDto;
 import swm_nm.morandi.auth.service.LoginService;
 import swm_nm.morandi.logging.Logging;
@@ -29,8 +28,7 @@ public class OAuthController {
     public ResponseEntity<String> googleLogin(@PathVariable String type, @RequestParam String code, HttpServletResponse response) {
         String accessToken = loginService.login(type, code, SecurityConstants.FOR_SERVICE).getAccessToken();
 
-        JwtCookie jwtCookie = new JwtCookie("accessToken", accessToken);
-        jwtCookie.setSameSite("None");
+        Cookie jwtCookie = new Cookie("accessToken", accessToken);
         jwtCookie.setHttpOnly(true);
         jwtCookie.setPath("/"); //모든 경로에서 접근 가능하도록 설정
         jwtCookie.setMaxAge(24 * 60 * 60); //쿠키 24시간
