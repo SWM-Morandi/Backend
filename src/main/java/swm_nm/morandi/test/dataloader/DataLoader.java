@@ -29,7 +29,7 @@ public class DataLoader implements CommandLineRunner {
 
         TestType testType1 = TestType.builder()
                 .testTypename("코딩테스트 대비 초급 (Small)")
-                .testTime(60)
+                .testTime(60L)
                 .problemCount(3)
                 .startDifficulty(DifficultyLevel.B5)
                 .endDifficulty(DifficultyLevel.S3)
@@ -48,7 +48,7 @@ public class DataLoader implements CommandLineRunner {
 
         TestType testType2 = TestType.builder()
                 .testTypename("코딩테스트 대비 중급 (Small)")
-                .testTime(60)
+                .testTime(60L)
                 .problemCount(3)
                 .startDifficulty(DifficultyLevel.B2)
                 .endDifficulty(DifficultyLevel.G4)
@@ -67,7 +67,7 @@ public class DataLoader implements CommandLineRunner {
 
         TestType testType3 = TestType.builder()
                 .testTypename("코딩테스트 대비 고급 (Small)")
-                .testTime(60)
+                .testTime(60L)
                 .problemCount(3)
                 .startDifficulty(DifficultyLevel.S4)
                 .endDifficulty(DifficultyLevel.P5)
@@ -88,7 +88,7 @@ public class DataLoader implements CommandLineRunner {
 
         TestType testType4 = TestType.builder()
                 .testTypename("코딩테스트 대비 초급 (Large)")
-                .testTime(120)
+                .testTime(120L)
                 .problemCount(5)
                 .startDifficulty(DifficultyLevel.B5)
                 .endDifficulty(DifficultyLevel.S3)
@@ -109,7 +109,7 @@ public class DataLoader implements CommandLineRunner {
 
         TestType testType5 = TestType.builder()
                 .testTypename("코딩테스트 대비 중급 (Large)")
-                .testTime(120)
+                .testTime(120L)
                 .problemCount(5)
                 .startDifficulty(DifficultyLevel.B2)
                 .endDifficulty(DifficultyLevel.G4)
@@ -130,7 +130,7 @@ public class DataLoader implements CommandLineRunner {
 
         TestType testType6 = TestType.builder()
                 .testTypename("코딩테스트 대비 고급 (Large)")
-                .testTime(120)
+                .testTime(120L)
                 .problemCount(5)
                 .startDifficulty(DifficultyLevel.S4)
                 .endDifficulty(DifficultyLevel.P5)
@@ -148,7 +148,7 @@ public class DataLoader implements CommandLineRunner {
 
         TestType testType7 = TestType.builder()
                 .testTypename("삼성")
-                .testTime(180)
+                .testTime(180L)
                 .problemCount(2)
                 .startDifficulty(DifficultyLevel.S1)
                 .endDifficulty(DifficultyLevel.G1)
@@ -167,7 +167,7 @@ public class DataLoader implements CommandLineRunner {
 
         TestType testType8 = TestType.builder()
                 .testTypename("네이버")
-                .testTime(120)
+                .testTime(120L)
                 .problemCount(4)
                 .startDifficulty(DifficultyLevel.S2)
                 .endDifficulty(DifficultyLevel.P5)
@@ -190,7 +190,7 @@ public class DataLoader implements CommandLineRunner {
 
         TestType testType9 = TestType.builder()
                 .testTypename("카카오")
-                .testTime(300)
+                .testTime(300L)
                 .problemCount(7)
                 .startDifficulty(DifficultyLevel.S3)
                 .endDifficulty(DifficultyLevel.P5)
@@ -212,7 +212,7 @@ public class DataLoader implements CommandLineRunner {
 
         TestType testType10 = TestType.builder()
                 .testTypename("라인")
-                .testTime(180)
+                .testTime(180L)
                 .problemCount(6)
                 .startDifficulty(DifficultyLevel.S4)
                 .endDifficulty(DifficultyLevel.G1)
@@ -231,7 +231,7 @@ public class DataLoader implements CommandLineRunner {
         difficultyRanges11.add(new DifficultyRange(DifficultyLevel.G4, DifficultyLevel.G3));
         TestType testType11 = TestType.builder()
                 .testTypename("쿠팡")
-                .testTime(180)
+                .testTime(180L)
                 .problemCount(4)
                 .startDifficulty(DifficultyLevel.S5)
                 .endDifficulty(DifficultyLevel.G3)
@@ -250,7 +250,7 @@ public class DataLoader implements CommandLineRunner {
         difficultyRanges12.add(new DifficultyRange(DifficultyLevel.G3, DifficultyLevel.G3));
         TestType testType12 = TestType.builder()
                 .testTypename("우아한형제들")
-                .testTime(180)
+                .testTime(180L)
                 .problemCount(4)
                 .startDifficulty(DifficultyLevel.S4)
                 .endDifficulty(DifficultyLevel.G3)
