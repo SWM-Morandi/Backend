@@ -51,8 +51,6 @@ public class TestService {
 
     private final AttemptProblemRepository attemptProblemRepository;
 
-    private final ProblemRepository problemRepository;
-
     private final MemberService memberService;
 
     private final TestTypeService testTypeService;

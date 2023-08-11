@@ -22,7 +22,7 @@ public class TestType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long testTypeId;
     private String testTypename;
-    private Integer testTime;
+    private Long testTime;
     private Integer problemCount;
 
     @Enumerated(EnumType.STRING)

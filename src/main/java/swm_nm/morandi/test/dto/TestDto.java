@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class TestDto {
     private Long testId;
     private LocalDateTime testDate;
-    private Integer testTime;
+    private Long testTime;
     private Integer problemCount;
     private DifficultyLevel startDifficulty;
     private DifficultyLevel endDifficulty;
