@@ -15,13 +15,13 @@ public class LoginService {
     private final OAuthServiceFactory oAuthServiceFactory;
     private final MemberLoginService memberService;
 
-    public TokenDto login(String type, String authorization_code, Boolean isDev){
+    public TokenDto login(String type, String authorizationCode, Boolean isDev){
 
         OAuthService oAuthService = oAuthServiceFactory.getServiceByType(type);
         if (oAuthService == null) {
             throw new MorandiException(AuthErrorCode.INVALID_SOCIAL_TYPE);
         }
-        String accessToken = oAuthService.getAccessToken(authorization_code, isDev);
+        String accessToken = oAuthService.getAccessToken(authorizationCode, isDev);
         UserDto userDto = oAuthService.getMemberInfo(accessToken);
 
         return memberService.loginOrRegisterMember(userDto);
@@ -36,7 +36,7 @@ public class LoginService {
             throw new MorandiException(AuthErrorCode.INVALID_SOCIAL_TYPE);
         }
         UserDto userDto = oAuthService.getMemberInfo(accessToken);
-        
+
         return memberService.loginOrRegisterMember(userDto);
 
 

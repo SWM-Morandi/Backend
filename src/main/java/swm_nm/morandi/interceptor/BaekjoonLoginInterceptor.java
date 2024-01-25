@@ -42,7 +42,6 @@ public class BaekjoonLoginInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        log.info("OnlineJudge 쿠키 존재");
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
     }
 

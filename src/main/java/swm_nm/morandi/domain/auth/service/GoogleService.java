@@ -28,15 +28,13 @@ public class GoogleService implements OAuthService{
     private final ObjectMapper objectMapper;
 
     @Value("${oauth.google.client-id}")
-    private String google_client_id;
+    private String googleClientId;
 
     @Value("${oauth.google.client-secret}")
-    private String google_client_secret;
+    private String googleClientSecret;
 
     @Value("${oauth.google.redirect-uri}")
-    private String google_client_redirect_uri;
-
-
+    private String googleClientRedirectUri;
     //키 값
     @Override
     public String getType() {
@@ -44,24 +42,22 @@ public class GoogleService implements OAuthService{
     }
 
     @Override
-    public String getAccessToken(String authorization_code, Boolean isDev){
+    public String getAccessToken(String authorizationCode, Boolean isDev){
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-            params.add("code", authorization_code);
-            params.add("client_id", google_client_id);
-            params.add("client_secret", google_client_secret);
+            params.add("code", authorizationCode);
+            params.add("client_id", googleClientId);
+            params.add("client_secret", googleClientSecret);
             params.add("grant_type", "authorization_code");
             if(isDev)
-                params.add("redirect_uri", google_client_redirect_uri+"/dev");
+                params.add("redirect_uri", googleClientRedirectUri+"/dev");
             else
-                params.add("redirect_uri", google_client_redirect_uri);
-
+                params.add("redirect_uri", googleClientRedirectUri);
 
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(params, headers);
-
 
         //오류 발생 시 Response Entity 반환하려면 어쩔 수 없이 아래처럼 초기화 해야 함
         ResponseEntity<String> responseEntity=null;
