@@ -1,12 +1,13 @@
 package swm_nm.morandi.aop.lock;
 
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import swm_nm.morandi.global.exception.MorandiException;
@@ -14,6 +15,7 @@ import swm_nm.morandi.global.exception.errorcode.LockErrorCode;
 import swm_nm.morandi.global.utils.SecurityUtils;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
 
 @Aspect
 @Component
@@ -21,40 +23,30 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class MemberLockAspect {
 
-    private final StringRedisTemplate redisTemplate;
+    private final RedissonClient redissonClient;
     private final String MEMBER_LOCK_KEY = "memberLock";
-    private final Integer MEMBER_LOCK_TTL = 5;
-
     @Pointcut("@annotation(swm_nm.morandi.aop.annotation.MemberLock)")
     public void memberLockPointcut() {
     }
 
     @Around("memberLockPointcut()")
-    public Object MEMBERLock(ProceedingJoinPoint joinPoint)  throws Throwable {
+    public Object MEMBERLock(ProceedingJoinPoint joinPoint) throws Throwable {
         Long memberId = SecurityUtils.getCurrentMemberId();
-        String memberLockKey = String.format("%s:%d", MEMBER_LOCK_KEY,memberId);
+        String memberLockKey = String.format("%s:%d", MEMBER_LOCK_KEY, memberId);
+        RLock lock = redissonClient.getLock(memberLockKey);
         boolean locked = false;
         try {
-            if (tryLock(memberLockKey)) {
-                locked = true;
-                return joinPoint.proceed();
-            } else {
+            locked = lock.tryLock(2, 5, TimeUnit.SECONDS);
+            if (!locked) {
                 throw new MorandiException(LockErrorCode.MEMBER_LOCKED);
             }
+            return joinPoint.proceed();
+        } catch (InterruptedException e) {
+            throw new MorandiException(LockErrorCode.INTERRUPT_ERROR);
         } finally {
-            if(locked) {
-                unlock(memberLockKey);
+            if (locked) {
+                lock.unlock();
             }
         }
     }
-
-    private Boolean tryLock(String key) {
-        return redisTemplate.opsForValue().setIfAbsent(key, "locked", MEMBER_LOCK_TTL, TimeUnit.SECONDS);
-    }
-
-    private void unlock(String key) {
-        redisTemplate.delete(key);
-    }
-
 }
-
