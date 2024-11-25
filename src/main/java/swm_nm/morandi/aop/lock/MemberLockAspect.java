@@ -15,6 +15,7 @@ import swm_nm.morandi.global.exception.errorcode.LockErrorCode;
 import swm_nm.morandi.global.utils.SecurityUtils;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
 
 @Aspect
 @Component
@@ -23,8 +24,6 @@ import java.util.concurrent.TimeUnit;
 public class MemberLockAspect {
 
     private final RedissonClient redissonClient;
-
-    private final StringRedisTemplate redisTemplate;
     private final String MEMBER_LOCK_KEY = "memberLock";
     @Pointcut("@annotation(swm_nm.morandi.aop.annotation.MemberLock)")
     public void memberLockPointcut() {
@@ -42,15 +41,12 @@ public class MemberLockAspect {
                 throw new MorandiException(LockErrorCode.MEMBER_LOCKED);
             }
             return joinPoint.proceed();
+        } catch (InterruptedException e) {
+            throw new MorandiException(LockErrorCode.INTERRUPT_ERROR);
         } finally {
             if (locked) {
-                unlock(memberLockKey);
+                lock.unlock();
             }
         }
     }
-    private void unlock(String key) {
-        redisTemplate.delete(key);
-    }
-
 }
-
