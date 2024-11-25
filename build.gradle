@@ -77,6 +77,7 @@ dependencies {
 
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
     implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+    implementation 'org.redisson:redisson-spring-boot-starter:3.21.1'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
     if ( System.getProperty("os.name") == "Mac OS X" && System.getProperty("os.arch") == "aarch64") {
